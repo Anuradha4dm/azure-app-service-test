@@ -4,118 +4,381 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Premium Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/">📱 Mobile Store</a>
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-mobile-alt me-2"></i>MobileHub
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link active" href="/">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/api/phones">API</a>
+                        <a class="nav-link" href="#features">
+                            <i class="fas fa-star me-1"></i>Features
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/phones">
+                            <i class="fas fa-code me-1"></i>API
+                        </a>
                     </li>
                 </ul>
+                <div class="navbar-nav">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-filter me-1"></i>Filter
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="filterByBrand('all')">All Brands</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByBrand('Apple')">Apple</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByBrand('Samsung')">Samsung</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByBrand('Google')">Google</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="sortByPrice('asc')">Price: Low to High</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="sortByPrice('desc')">Price: High to Low</a></li>
+                        </ul>
+                    </div>
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <i class="fas fa-search"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="bg-primary text-white py-5">
+    <section class="hero-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h1 class="display-4">Latest Mobile Phones</h1>
-                    <p class="lead">Discover the best mobile phones with competitive prices</p>
+            <div class="hero-content text-center text-white">
+                <h1 class="display-4 mb-4">
+                    Discover Premium Mobile Phones
+                </h1>
+                <p class="lead mb-4 fs-5">
+                    Explore our curated collection of the latest smartphones with cutting-edge technology
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="#phones" class="btn btn-primary btn-lg">
+                        <i class="fas fa-mobile-alt me-2"></i>Browse Phones
+                    </a>
+                    <a href="#features" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-info-circle me-2"></i>Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Search Phones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" placeholder="Search by name, brand, or specs..." id="searchInput" onkeyup="searchPhones()">
+                    <div id="searchResults" class="mt-3"></div>
                 </div>
             </div>
         </div>
     </div>
 
-<!-- Phones Grid -->
-<div class="container py-5">
-    <div class="row">
-        <div class="col-12">
-            <h2 class="text-center mb-5">Our Mobile Phones Collection</h2>
+    <!-- Phones Collection -->
+    <section id="phones" class="container py-5" style="margin-top: 100px;">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">Our Premium Collection</h2>
+            <p class="lead text-muted">Handpicked smartphones that redefine excellence</p>
         </div>
-    </div>
-    
-    <div class="row">
-        <% phones.forEach(phone => { %>
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-img-container">
-                    <img src="<%= phone.image %>" class="card-img-top phone-image" alt="<%= phone.name %>" onerror="this.src='/images/placeholder.svg'">
-                </div>
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title"><%= phone.name %></h5>
-                    <p class="text-muted mb-2"><%= phone.brand %></p>
-                    
-                    <div class="phone-specs mb-3">
-                        <small class="text-muted">
-                            <i class="me-1">💾</i> <%= phone.specs.storage %> | 
-                            <i class="me-1">📱</i> <%= phone.specs.screen %> | 
-                            <i class="me-1">📷</i> <%= phone.specs.camera %>
-                        </small>
+        
+        <div class="row g-4" id="phonesContainer">
+            <% phones.forEach((phone, index) => { %>
+            <div class="col-lg-4 col-md-6 phone-card" data-brand="<%= phone.brand %>" data-price="<%= phone.price %>" data-name="<%= phone.name.toLowerCase() %>">
+                <div class="card h-100" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
+                    <div class="card-img-container">
+                        <img src="<%= phone.image %>" class="phone-image" alt="<%= phone.name %>" onerror="this.src='/images/placeholder.svg'">
+                        <div class="position-absolute top-0 end-0 p-3">
+                            <button class="btn btn-sm btn-outline-light rounded-circle" onclick="toggleWishlist(<%= phone.id %>)" title="Add to Wishlist">
+                                <i class="far fa-heart" id="heart-<%= phone.id %>"></i>
+                            </button>
+                        </div>
                     </div>
-                    
-                    <div class="mt-auto">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="price h4 text-success mb-0">$<%= phone.price.toLocaleString() %></span>
-                            <a href="/phone/<%= phone.id %>" class="btn btn-primary btn-sm">View Details</a>
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0"><%= phone.name %></h5>
+                            <span class="brand-badge"><%= phone.brand %></span>
+                        </div>
+                        
+                        <div class="phone-specs mb-3">
+                            <div class="spec-row">
+                                <span class="spec-label"><i class="fas fa-hdd me-1"></i>Storage</span>
+                                <span class="spec-value"><%= phone.specs.storage %></span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label"><i class="fas fa-tv me-1"></i>Display</span>
+                                <span class="spec-value"><%= phone.specs.screen %></span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label"><i class="fas fa-camera me-1"></i>Camera</span>
+                                <span class="spec-value"><%= phone.specs.camera %></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-auto">
+                            <div class="price-container mb-3">
+                                <div>
+                                    <div class="price-label">Starting at</div>
+                                    <div class="price">$<%= phone.price.toLocaleString() %></div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="rating">
+                                        <% for(let i = 0; i < 5; i++) { %>
+                                            <i class="fas fa-star text-warning"></i>
+                                        <% } %>
+                                        <small class="text-muted ms-1">(4.8)</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href="/phone/<%= phone.id %>" class="btn btn-primary">
+                                    <i class="fas fa-eye me-2"></i>View Details
+                                </a>
+                                <button class="btn btn-success" onclick="addToCart(<%= phone.id %>)">
+                                    <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <% }); %>
         </div>
-        <% }); %>
-    </div>
-</div>
+    </section>
 
-<!-- Features Section -->
-<div class="bg-light py-5">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-4">
-                <div class="feature-icon mb-3">
-                    <i class="display-4">🚚</i>
-                </div>
-                <h5>Free Shipping</h5>
-                <p class="text-muted">Free delivery on all orders over $500</p>
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="text-center text-white mb-5">
+                <h2 class="display-5 fw-bold mb-3">Why Choose MobileHub?</h2>
+                <p class="lead">Premium experience with unmatched service</p>
             </div>
-            <div class="col-md-4">
-                <div class="feature-icon mb-3">
-                    <i class="display-4">🔒</i>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <i class="fas fa-shipping-fast feature-icon"></i>
+                        <h5 class="fw-bold">Free Express Shipping</h5>
+                        <p>Lightning-fast delivery on all orders over $500. Get your new phone in 24 hours.</p>
+                    </div>
                 </div>
-                <h5>Secure Payment</h5>
-                <p class="text-muted">Your payment information is safe with us</p>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-icon mb-3">
-                    <i class="display-4">🎯</i>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt feature-icon"></i>
+                        <h5 class="fw-bold">Secure & Protected</h5>
+                        <p>Bank-level security for all transactions. Your data and payments are completely safe.</p>
+                    </div>
                 </div>
-                <h5>Best Prices</h5>
-                <p class="text-muted">Competitive prices on all mobile phones</p>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <i class="fas fa-award feature-icon"></i>
+                        <h5 class="fw-bold">Best Price Guarantee</h5>
+                        <p>We match any competitor's price. Find it cheaper elsewhere? We'll beat it by 5%.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <i class="fas fa-headset feature-icon"></i>
+                        <h5 class="fw-bold">24/7 Expert Support</h5>
+                        <p>Our tech experts are always here to help with setup, troubleshooting, and advice.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <i class="fas fa-undo feature-icon"></i>
+                        <h5 class="fw-bold">30-Day Returns</h5>
+                        <p>Not satisfied? Return your phone within 30 days for a full refund, no questions asked.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <i class="fas fa-tools feature-icon"></i>
+                        <h5 class="fw-bold">Free Setup Service</h5>
+                        <p>We'll help you transfer data, set up apps, and configure your new phone perfectly.</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4 mt-5">
-        <div class="container text-center">
-            <p>&copy; 2024 Mobile Phone Store. All rights reserved.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5 class="fw-bold mb-3">
+                        <i class="fas fa-mobile-alt me-2"></i>MobileHub
+                    </h5>
+                    <p class="text-light opacity-75">Your trusted partner for premium mobile phones. We bring you the latest technology with unmatched service.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-light opacity-75 text-decoration-none">Home</a></li>
+                        <li><a href="#phones" class="text-light opacity-75 text-decoration-none">Phones</a></li>
+                        <li><a href="#features" class="text-light opacity-75 text-decoration-none">Features</a></li>
+                        <li><a href="/api/phones" class="text-light opacity-75 text-decoration-none">API</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="fw-bold mb-3">Support</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light opacity-75 text-decoration-none">Help Center</a></li>
+                        <li><a href="#" class="text-light opacity-75 text-decoration-none">Contact Us</a></li>
+                        <li><a href="#" class="text-light opacity-75 text-decoration-none">Warranty</a></li>
+                        <li><a href="#" class="text-light opacity-75 text-decoration-none">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="fw-bold mb-3">Newsletter</h6>
+                    <p class="text-light opacity-75 mb-3">Get the latest updates on new phones and exclusive deals.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 opacity-25">
+            <div class="text-center text-light opacity-75">
+                <p>&copy; 2024 MobileHub. All rights reserved. Built with ❤️ for mobile enthusiasts.</p>
+            </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Interactive Features
+        let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+        // Toggle Wishlist
+        function toggleWishlist(phoneId) {
+            const heartIcon = document.getElementById(`heart-${phoneId}`);
+            if (wishlist.includes(phoneId)) {
+                wishlist = wishlist.filter(id => id !== phoneId);
+                heartIcon.className = 'far fa-heart';
+                showToast('Removed from wishlist', 'info');
+            } else {
+                wishlist.push(phoneId);
+                heartIcon.className = 'fas fa-heart text-danger';
+                showToast('Added to wishlist', 'success');
+            }
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+
+        // Add to Cart
+        function addToCart(phoneId) {
+            cart.push(phoneId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showToast('Added to cart', 'success');
+        }
+
+        // Filter by Brand
+        function filterByBrand(brand) {
+            const cards = document.querySelectorAll('.phone-card');
+            cards.forEach(card => {
+                if (brand === 'all' || card.dataset.brand === brand) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease-in-out';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Sort by Price
+        function sortByPrice(order) {
+            const container = document.getElementById('phonesContainer');
+            const cards = Array.from(container.children);
+            
+            cards.sort((a, b) => {
+                const priceA = parseInt(a.dataset.price);
+                const priceB = parseInt(b.dataset.price);
+                return order === 'asc' ? priceA - priceB : priceB - priceA;
+            });
+            
+            cards.forEach(card => container.appendChild(card));
+        }
+
+        // Search Phones
+        function searchPhones() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.phone-card');
+            
+            cards.forEach(card => {
+                const name = card.dataset.name;
+                const brand = card.dataset.brand.toLowerCase();
+                if (name.includes(query) || brand.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Toast Notifications
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `alert alert-${type} position-fixed top-0 end-0 m-3`;
+            toast.style.zIndex = '9999';
+            toast.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Initialize wishlist icons
+        document.addEventListener('DOMContentLoaded', function() {
+            wishlist.forEach(phoneId => {
+                const heartIcon = document.getElementById(`heart-${phoneId}`);
+                if (heartIcon) {
+                    heartIcon.className = 'fas fa-heart text-danger';
+                }
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

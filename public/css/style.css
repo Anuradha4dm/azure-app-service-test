@@ -1,183 +1,446 @@
-/* Custom Styles for Mobile Phone App */
+/* Premium Mobile Phone Store - Rich & User-Friendly Design */
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    min-height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Premium Color Palette */
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --dark-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --gold-gradient: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+  --emerald-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  --rose-gradient: linear-gradient(135deg, #ff8a80 0%, #ff5722 100%);
+  
+  /* Neutral Colors */
+  --white: #ffffff;
+  --light-gray: #f8f9fa;
+  --medium-gray: #6c757d;
+  --dark-gray: #343a40;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --shadow-dark: rgba(0, 0, 0, 0.3);
+  
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Spacing */
+  --border-radius: 16px;
+  --border-radius-lg: 24px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Card styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  line-height: 1.6;
+  color: var(--dark-gray);
+  overflow-x: hidden;
+}
+
+/* Enhanced Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.5rem;
+}
+
+.display-4 {
+  font-weight: 800;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Premium Card Design */
 .card {
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    box-shadow: 0 4px 20px rgba(26, 26, 46, 0.1);
+  background: var(--white);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 8px 32px var(--shadow-light);
+  transition: var(--transition);
+  overflow: hidden;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: var(--transition);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(26, 26, 46, 0.2) !important;
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 60px var(--shadow-medium);
 }
 
-/* Phone image styles */
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Luxury Phone Image Container */
 .card-img-container {
-    height: 250px;
-    overflow: hidden;
-    border-radius: 12px 12px 0 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 280px;
+  position: relative;
+  background: var(--dark-gradient);
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.card-img-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.card:hover .card-img-container::before {
+  transform: translateX(100%);
 }
 
 .phone-image {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+  height: 85%;
+  width: 85%;
+  object-fit: contain;
+  transition: var(--transition);
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
 }
 
 .card:hover .phone-image {
-    transform: scale(1.05);
+  transform: scale(1.1) rotate(2deg);
 }
 
-.phone-detail-image {
-    height: 400px;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 12px 0 0 12px;
+/* Rich Card Body */
+.card-body {
+  padding: 2rem;
+  position: relative;
 }
 
-/* Price styling */
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dark-gray);
+  margin-bottom: 0.5rem;
+}
+
+.brand-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: var(--primary-gradient);
+  color: var(--white);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Premium Specifications */
+.phone-specs {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.spec-row:last-child {
+  border-bottom: none;
+}
+
+.spec-label {
+  font-weight: 600;
+  color: var(--medium-gray);
+  font-size: 0.9rem;
+}
+
+.spec-value {
+  font-weight: 700;
+  color: var(--dark-gray);
+}
+
+/* Luxury Price Display */
+.price-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
 .price {
-    font-weight: 700;
-    color: #28a745 !important;
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--emerald-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Button customizations */
+.price-label {
+  font-size: 0.8rem;
+  color: var(--medium-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Premium Buttons */
 .btn {
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.2s ease;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #2c3e50, #34495e);
-    border: none;
-    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+  background: var(--primary-gradient);
+  color: var(--white);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #34495e, #2c3e50);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+  color: var(--white);
 }
 
 .btn-success {
-    background: linear-gradient(135deg, #27ae60, #2ecc71);
-    border: none;
-    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+  background: var(--emerald-gradient);
+  color: var(--white);
+  box-shadow: 0 8px 25px rgba(17, 153, 142, 0.3);
 }
 
 .btn-success:hover {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(17, 153, 142, 0.4);
+  color: var(--white);
 }
 
-/* Navbar styles */
+.btn-outline-primary {
+  border: 2px solid #667eea;
+  color: #667eea;
+  background: transparent;
+}
+
+.btn-outline-primary:hover {
+  background: var(--primary-gradient);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* Luxury Navigation */
+.navbar {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 8px 32px var(--shadow-light);
+  padding: 1rem 0;
+}
+
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 800;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Hero section */
-.bg-primary {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+.nav-link {
+  font-weight: 600;
+  color: var(--dark-gray) !important;
+  transition: var(--transition);
+  position: relative;
 }
 
-/* Specifications */
-.phone-specs {
-    background-color: #f8f9fa;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-gradient);
+  transition: var(--transition);
+  transform: translateX(-50%);
 }
 
-.spec-item {
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-radius: 6px;
-    border-left: 3px solid #007bff;
+.nav-link:hover::after {
+  width: 100%;
 }
 
-/* Feature icons */
+/* Hero Section Enhancement */
+.hero-section {
+  background: var(--dark-gradient);
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 0;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.03)" points="0,1000 1000,0 1000,1000"/></svg>');
+  background-size: cover;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Features Section */
+.features-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: var(--white);
+  padding: 4rem 0;
+  margin-top: 4rem;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  text-align: center;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
 .feature-icon {
-    font-size: 3rem;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
 }
 
-/* Error page styles */
-.error-container {
-    padding: 60px 0;
+/* Footer Enhancement */
+.footer {
+  background: var(--dark-gradient);
+  color: var(--white);
+  padding: 2rem 0;
+  margin-top: 4rem;
 }
 
-/* Responsive adjustments */
+/* Loading States */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .card-img-container {
-        height: 200px;
-    }
-    
-    .phone-detail-image {
-        height: 300px;
-        border-radius: 12px 12px 0 0;
-    }
-    
-    .display-4 {
-        font-size: 2.5rem;
-    }
-    
-    .lead {
-        font-size: 1.1rem;
-    }
+  .card-img-container {
+    height: 220px;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .price {
+    font-size: 1.5rem;
+  }
+  
+  .hero-section {
+    padding: 2rem 0;
+  }
+  
+  .features-section {
+    padding: 2rem 0;
+  }
 }
 
-/* Loading animation for images */
-.card-img-top {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-@keyframes loading {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+/* Focus States */
+.btn:focus,
+.nav-link:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
 }
 
-/* Footer */
-footer {
-    margin-top: auto;
-}
-
-/* Smooth scrolling */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: var(--light-gray);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #007bff;
-    border-radius: 4px;
+  background: var(--primary-gradient);
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #0056b3;
+  background: var(--dark-gradient);
 }

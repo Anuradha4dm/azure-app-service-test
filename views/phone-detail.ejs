@@ -3,92 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title><%= phone.name %> - MobileHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Premium Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/">📱 Mobile Store</a>
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-mobile-alt me-2"></i>MobileHub
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/api/phones">API</a>
+                        <a class="nav-link" href="/#features">
+                            <i class="fas fa-star me-1"></i>Features
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/phones">
+                            <i class="fas fa-code me-1"></i>API
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container py-5">
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><%= phone.name %></li>
-                </ol>
-            </nav>
-            
-            <div class="card shadow">
-                <div class="row g-0">
-                    <div class="col-md-5">
-                        <img src="<%= phone.image %>" class="img-fluid rounded-start phone-detail-image" alt="<%= phone.name %>" onerror="this.src='/images/placeholder.svg'">
+    <!-- Breadcrumb -->
+    <div class="container" style="margin-top: 100px; padding-top: 20px;">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="/#phones" class="text-decoration-none">Phones</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%= phone.name %></li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Phone Details -->
+    <div class="container py-4">
+        <div class="row g-5">
+            <!-- Product Image -->
+            <div class="col-lg-6">
+                <div class="product-image-container">
+                    <div class="main-image-wrapper">
+                        <img src="<%= phone.image %>" class="main-product-image" alt="<%= phone.name %>" onerror="this.src='/images/placeholder.svg'">
+                        <div class="image-overlay">
+                            <button class="btn btn-light btn-sm" onclick="zoomImage()">
+                                <i class="fas fa-search-plus"></i> Zoom
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-md-7">
-                        <div class="card-body">
-                            <h1 class="card-title h2"><%= phone.name %></h1>
-                            <p class="text-muted h5 mb-3"><%= phone.brand %></p>
-                            
-                            <div class="price-section mb-4">
-                                <span class="display-6 text-success">$<%= phone.price.toLocaleString() %></span>
+                    
+                    <!-- Image Gallery Thumbnails -->
+                    <div class="image-gallery mt-3">
+                        <div class="row g-2">
+                            <div class="col-3">
+                                <img src="<%= phone.image %>" class="gallery-thumb active" alt="Front view" onclick="changeMainImage(this)">
                             </div>
-                            
-                            <div class="specifications mb-4">
-                                <h5>Specifications</h5>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="spec-item mb-2">
-                                            <strong>Storage:</strong><br>
-                                            <span class="text-muted"><%= phone.specs.storage %></span>
-                                        </div>
-                                        <div class="spec-item mb-2">
-                                            <strong>Screen Size:</strong><br>
-                                            <span class="text-muted"><%= phone.specs.screen %></span>
-                                        </div>
+                            <div class="col-3">
+                                <img src="/images/placeholder.svg" class="gallery-thumb" alt="Back view" onclick="changeMainImage(this)">
+                            </div>
+                            <div class="col-3">
+                                <img src="/images/placeholder.svg" class="gallery-thumb" alt="Side view" onclick="changeMainImage(this)">
+                            </div>
+                            <div class="col-3">
+                                <img src="/images/placeholder.svg" class="gallery-thumb" alt="Box contents" onclick="changeMainImage(this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="col-lg-6">
+                <div class="product-info">
+                    <!-- Brand & Title -->
+                    <div class="brand-section mb-3">
+                        <span class="brand-badge mb-2"><%= phone.brand %></span>
+                        <h1 class="product-title"><%= phone.name %></h1>
+                    </div>
+
+                    <!-- Rating & Reviews -->
+                    <div class="rating-section mb-4">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rating">
+                                <% for(let i = 0; i < 5; i++) { %>
+                                    <i class="fas fa-star text-warning"></i>
+                                <% } %>
+                                <span class="rating-score ms-2">4.8</span>
+                            </div>
+                            <span class="text-muted">|</span>
+                            <a href="#reviews" class="text-decoration-none">2,847 reviews</a>
+                            <span class="text-muted">|</span>
+                            <span class="text-success"><i class="fas fa-check-circle me-1"></i>In Stock</span>
+                        </div>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="price-section mb-4">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="current-price">$<%= phone.price.toLocaleString() %></span>
+                            <span class="original-price">$<%= (phone.price * 1.15).toLocaleString() %></span>
+                            <span class="discount-badge">Save 15%</span>
+                        </div>
+                        <p class="price-note text-muted mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Price includes all taxes. Free shipping on orders over $500.
+                        </p>
+                    </div>
+
+                    <!-- Key Features -->
+                    <div class="features-section mb-4">
+                        <h5 class="section-title">Key Features</h5>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="fas fa-tv feature-icon-small"></i>
+                                    <div>
+                                        <div class="feature-label">Display</div>
+                                        <div class="feature-value"><%= phone.specs.screen %></div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="spec-item mb-2">
-                                            <strong>Camera:</strong><br>
-                                            <span class="text-muted"><%= phone.specs.camera %></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="fas fa-hdd feature-icon-small"></i>
+                                    <div>
+                                        <div class="feature-label">Storage</div>
+                                        <div class="feature-value"><%= phone.specs.storage %></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="fas fa-camera feature-icon-small"></i>
+                                    <div>
+                                        <div class="feature-label">Camera</div>
+                                        <div class="feature-value"><%= phone.specs.camera %></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="feature-item">
+                                    <i class="fas fa-battery-full feature-icon-small"></i>
+                                    <div>
+                                        <div class="feature-label">Battery</div>
+                                        <div class="feature-value">All-day battery</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="purchase-section">
+                        <div class="quantity-section mb-3">
+                            <label class="form-label">Quantity</label>
+                            <div class="quantity-controls">
+                                <button class="btn btn-outline-secondary" onclick="changeQuantity(-1)">-</button>
+                                <input type="number" class="form-control" id="quantity" value="1" min="1" max="10">
+                                <button class="btn btn-outline-secondary" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary btn-lg w-100 mb-3" onclick="addToCart('<%= phone.id %>')">
+                                <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                            </button>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <button class="btn btn-success w-100" onclick="buyNow('<%= phone.id %>')">
+                                        <i class="fas fa-bolt me-1"></i>Buy Now
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-outline-primary w-100" onclick="toggleWishlist('<%= phone.id %>')">
+                                        <i class="far fa-heart me-1" id="wishlist-heart-<%= phone.id %>"></i>Wishlist
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Info -->
+                    <div class="delivery-info mt-4">
+                        <div class="delivery-option">
+                            <i class="fas fa-shipping-fast text-primary"></i>
+                            <div>
+                                <strong>Free Express Delivery</strong>
+                                <div class="text-muted">Delivered by tomorrow, Dec 15</div>
+                            </div>
+                        </div>
+                        <div class="delivery-option">
+                            <i class="fas fa-store text-success"></i>
+                            <div>
+                                <strong>In-Store Pickup</strong>
+                                <div class="text-muted">Ready in 2 hours at your nearest store</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Tabs -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <ul class="nav nav-tabs premium-tabs" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#specifications">
+                            <i class="fas fa-cogs me-2"></i>Specifications
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reviews">
+                            <i class="fas fa-star me-2"></i>Reviews
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#support">
+                            <i class="fas fa-life-ring me-2"></i>Support
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content premium-tab-content">
+                    <!-- Specifications Tab -->
+                    <div class="tab-pane fade show active" id="specifications">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <h6 class="spec-category">Display</h6>
+                                <table class="table table-borderless spec-table">
+                                    <tr><td>Size</td><td><%= phone.specs.screen %></td></tr>
+                                    <tr><td>Technology</td><td>Super Retina XDR OLED</td></tr>
+                                    <tr><td>Resolution</td><td>2556 x 1179 pixels</td></tr>
+                                    <tr><td>HDR Support</td><td>HDR10, Dolby Vision</td></tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="spec-category">Camera</h6>
+                                <table class="table table-borderless spec-table">
+                                    <tr><td>Main Camera</td><td><%= phone.specs.camera %></td></tr>
+                                    <tr><td>Front Camera</td><td>12MP TrueDepth</td></tr>
+                                    <tr><td>Video Recording</td><td>4K at 60fps</td></tr>
+                                    <tr><td>Features</td><td>Night mode, Portrait mode</td></tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="spec-category">Performance</h6>
+                                <table class="table table-borderless spec-table">
+                                    <tr><td>Processor</td><td>A17 Pro chip</td></tr>
+                                    <tr><td>Storage</td><td><%= phone.specs.storage %></td></tr>
+                                    <tr><td>RAM</td><td>8GB</td></tr>
+                                    <tr><td>5G Support</td><td>Yes</td></tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="spec-category">Design</h6>
+                                <table class="table table-borderless spec-table">
+                                    <tr><td>Materials</td><td>Titanium frame, Glass back</td></tr>
+                                    <tr><td>Water Resistance</td><td>IP68</td></tr>
+                                    <tr><td>Weight</td><td>221 grams</td></tr>
+                                    <tr><td>Colors</td><td>4 available</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reviews Tab -->
+                    <div class="tab-pane fade" id="reviews">
+                        <div class="reviews-summary mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 text-center">
+                                    <div class="overall-rating">
+                                        <div class="rating-number">4.8</div>
+                                        <div class="rating-stars mb-2">
+                                            <% for(let i = 0; i < 5; i++) { %>
+                                                <i class="fas fa-star text-warning"></i>
+                                            <% } %>
                                         </div>
-                                        <div class="spec-item mb-2">
-                                            <strong>Brand:</strong><br>
-                                            <span class="text-muted"><%= phone.brand %></span>
+                                        <div class="text-muted">Based on 2,847 reviews</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="rating-breakdown">
+                                        <div class="rating-row">
+                                            <span>5 star</span>
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 75%"></div>
+                                            </div>
+                                            <span>75%</span>
+                                        </div>
+                                        <div class="rating-row">
+                                            <span>4 star</span>
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 20%"></div>
+                                            </div>
+                                            <span>20%</span>
+                                        </div>
+                                        <div class="rating-row">
+                                            <span>3 star</span>
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 3%"></div>
+                                            </div>
+                                            <span>3%</span>
+                                        </div>
+                                        <div class="rating-row">
+                                            <span>2 star</span>
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 1%"></div>
+                                            </div>
+                                            <span>1%</span>
+                                        </div>
+                                        <div class="rating-row">
+                                            <span>1 star</span>
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 1%"></div>
+                                            </div>
+                                            <span>1%</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="action-buttons">
-                                <button class="btn btn-success btn-lg me-2">
-                                    <i class="me-2">🛒</i>Add to Cart
-                                </button>
-                                <button class="btn btn-outline-primary btn-lg">
-                                    <i class="me-2">❤️</i>Add to Wishlist
-                                </button>
+                        </div>
+
+                        <div class="review-item">
+                            <div class="d-flex gap-3">
+                                <div class="review-avatar">
+                                    <img src="https://via.placeholder.com/50x50" alt="User" class="rounded-circle">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <strong>John D.</strong>
+                                            <div class="review-rating">
+                                                <% for(let i = 0; i < 5; i++) { %>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        <small class="text-muted">2 days ago</small>
+                                    </div>
+                                    <p class="review-text">
+                                        "Absolutely love this phone! The camera quality is exceptional and the battery lasts all day. 
+                                        The build quality feels premium and the display is gorgeous. Highly recommended!"
+                                    </p>
+                                    <div class="review-actions">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-thumbs-up me-1"></i>Helpful (24)
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <div class="mt-4">
-                                <a href="/" class="btn btn-link">← Back to All Phones</a>
+                        </div>
+                    </div>
+
+                    <!-- Support Tab -->
+                    <div class="tab-pane fade" id="support">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="support-card">
+                                    <i class="fas fa-headset support-icon"></i>
+                                    <h6>24/7 Customer Support</h6>
+                                    <p>Get help anytime with our dedicated support team.</p>
+                                    <button class="btn btn-primary">Contact Support</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="support-card">
+                                    <i class="fas fa-tools support-icon"></i>
+                                    <h6>Setup & Transfer Service</h6>
+                                    <p>Free data transfer and setup assistance.</p>
+                                    <button class="btn btn-primary">Schedule Service</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="support-card">
+                                    <i class="fas fa-shield-alt support-icon"></i>
+                                    <h6>Extended Warranty</h6>
+                                    <p>Protect your investment with extended coverage.</p>
+                                    <button class="btn btn-primary">Learn More</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="support-card">
+                                    <i class="fas fa-graduation-cap support-icon"></i>
+                                    <h6>How-to Guides</h6>
+                                    <p>Learn how to get the most out of your new phone.</p>
+                                    <button class="btn btn-primary">View Guides</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -96,15 +411,93 @@
             </div>
         </div>
     </div>
-</div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4 mt-5">
-        <div class="container text-center">
-            <p>&copy; 2024 Mobile Phone Store. All rights reserved.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center text-light">
+                <p>&copy; 2024 MobileHub. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+        // Initialize wishlist state
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneId = '<%= phone.id %>';
+            if (wishlist.includes(phoneId)) {
+                document.getElementById('wishlist-heart-<%= phone.id %>').className = 'fas fa-heart text-danger';
+            }
+        });
+
+        // Wishlist functionality
+        function toggleWishlist(phoneId) {
+            if (wishlist.includes(phoneId)) {
+                wishlist = wishlist.filter(id => id !== phoneId);
+                document.getElementById(`wishlist-heart-${phoneId}`).className = 'far fa-heart';
+                showToast('Removed from wishlist', 'info');
+            } else {
+                wishlist.push(phoneId);
+                document.getElementById(`wishlist-heart-${phoneId}`).className = 'fas fa-heart text-danger';
+                showToast('Added to wishlist', 'success');
+            }
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
+
+        // Cart functionality
+        function addToCart(phoneId) {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            for (let i = 0; i < quantity; i++) {
+                cart.push(phoneId);
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showToast(`Added ${quantity} item(s) to cart`, 'success');
+        }
+
+        function buyNow(phoneId) {
+            addToCart(phoneId);
+            showToast('Redirecting to checkout...', 'info');
+            // Here you would redirect to checkout
+        }
+
+        // Quantity controls
+        function changeQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            let newValue = parseInt(quantityInput.value) + change;
+            if (newValue >= 1 && newValue <= 10) {
+                quantityInput.value = newValue;
+            }
+        }
+
+        // Image gallery
+        function changeMainImage(thumbnail) {
+            document.querySelector('.main-product-image').src = thumbnail.src;
+            document.querySelectorAll('.gallery-thumb').forEach(thumb => thumb.classList.remove('active'));
+            thumbnail.classList.add('active');
+        }
+
+        function zoomImage() {
+            // Image zoom functionality would go here
+            showToast('Zoom functionality coming soon!', 'info');
+        }
+
+        // Toast notifications
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `alert alert-${type} position-fixed top-0 end-0 m-3`;
+            toast.style.zIndex = '9999';
+            toast.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+    </script>
 </body>
 </html>
