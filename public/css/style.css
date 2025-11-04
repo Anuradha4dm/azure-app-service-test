@@ -2,7 +2,8 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
 }
 
 /* Card styles */
@@ -10,11 +11,13 @@ body {
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     border: none;
     border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 0 4px 20px rgba(26, 26, 46, 0.1);
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+    box-shadow: 0 12px 35px rgba(26, 26, 46, 0.2) !important;
 }
 
 /* Phone image styles */
@@ -22,7 +25,7 @@ body {
     height: 250px;
     overflow: hidden;
     border-radius: 12px 12px 0 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,23 +63,27 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #007bff, #0056b3);
+    background: linear-gradient(135deg, #2c3e50, #34495e);
     border: none;
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #0056b3, #004085);
+    background: linear-gradient(135deg, #34495e, #2c3e50);
     transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
 }
 
 .btn-success {
-    background: linear-gradient(135deg, #28a745, #1e7e34);
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
     border: none;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
 }
 
 .btn-success:hover {
-    background: linear-gradient(135deg, #1e7e34, #155724);
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
     transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
 }
 
 /* Navbar styles */
@@ -87,7 +94,7 @@ body {
 
 /* Hero section */
 .bg-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
 }
 
 /* Specifications */
